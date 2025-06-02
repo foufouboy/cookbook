@@ -1,11 +1,7 @@
-import '../styles/register.css';
+import "../styles/register.sass";
 
 function Register() {
-
-  return (
-    <>
-    </>
-  )
+    return <></>;
 }
 
 export default Register;

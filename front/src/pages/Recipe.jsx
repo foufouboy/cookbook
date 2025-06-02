@@ -1,11 +1,7 @@
-import '../styles/recipe.css';
+import "../styles/recipe.sass";
 
 function Recipe() {
-
-  return (
-    <>
-    </>
-  )
+    return <></>;
 }
 
 export default Recipe;

@@ -1,11 +1,7 @@
-import '../styles/footer.css';
+import "../styles/footer.sass";
 
 function Footer() {
-
-  return (
-    <>
-    </>
-  )
+    return <></>;
 }
 
 export default Footer;
