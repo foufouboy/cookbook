@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./styles/App.sass";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Recipe from "./pages/Recipe";
