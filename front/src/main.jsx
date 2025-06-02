@@ -2,8 +2,4 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./styles/index.sass";
 
-createRoot(document.getElementById("root")).render(
-    <AuthProvider>
-        <App />
-    </AuthProvider>
-);
+createRoot(document.getElementById("root")).render(<App />);
