@@ -1,11 +1,7 @@
-import '../styles/login.css';
+import "../styles/login.sass";
 
 function Login() {
-
-  return (
-    <>
-    </>
-  )
+    return <></>;
 }
 
 export default Login;

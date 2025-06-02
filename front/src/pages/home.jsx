@@ -1,11 +1,7 @@
-import '../styles/home.css';
+import "../styles/home.sass";
 
 function Home() {
-
-  return (
-    <>
-    </>
-  )
+    return <></>;
 }
 
 export default Home;
