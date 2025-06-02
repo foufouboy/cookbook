@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Recipe from "./pages/Recipe";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Register" element={<Register />} />
                 <Route path="/*" element={<Error />} />
