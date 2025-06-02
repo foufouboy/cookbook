@@ -1,4 +1,4 @@
-import '../styles/footer.css';
+import '../styles/home.css';
 
 function Home() {
 
