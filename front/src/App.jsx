@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from "react-router";
 import "./styles/App.sass";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
