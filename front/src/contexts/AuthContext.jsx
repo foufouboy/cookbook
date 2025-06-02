@@ -1,1 +1,3 @@
-export default function authContext() {}
+function AuthContext() {}
+
+export default AuthContext;
