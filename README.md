@@ -1,47 +1,67 @@
 # cookbook
 
-# Projet React – Intégration + Fonctionnalités dynamiques
+# Projet Fullstack – Application de gestion de recettes
 
-## 🔧 Contexte
-Vous disposez d’un backend déjà prêt, ainsi que d’un début d’intégration HTML/CSS (fourni) basé sur cette maquette Figma :  
-👉 [Maquette Figma – Sophie Bluel](https://www.figma.com/design/kfKHknHySoTibZfdolGAX6/Sophie-Bluel---Desktop?node-id=0-1&p=f&t=LgX4GIEnSbXUe0m1-0)
+## 🔧 Contexte  
+Vous allez développer une application complète **frontend + backend** permettant à des utilisateurs de **gérer des recettes de cuisine** (affichage, ajout, modification, suppression), avec une **authentification sécurisée**.
 
-## 📌 Objectif
-Reprendre ce projet pour le **convertir intégralement en React**, et y intégrer la logique dynamique nécessaire.
+L’objectif est de concevoir une architecture propre, moderne et fonctionnelle en utilisant **React pour le frontend** et **Node.js + Express + MongoDB pour le backend**.
+
+---
+
+## 📌 Objectifs principaux
+
+- Concevoir une API REST sécurisée pour la gestion des utilisateurs et des recettes.
+- Mettre en place une application React avec une interface utilisateur fluide.
+- Gérer l’authentification via `JWT` et le `localStorage`.
+- Protéger les routes sensibles côté frontend et backend.
 
 ---
 
 ## ✅ Travail demandé
 
-### 1. Convertir l'intégration HTML en React :
-- Découpez proprement le code en composants réutilisables.
-- Intégrez le style fourni.
-
-### 2. Page d’accueil :
-- Récupérez les projets via l’API.
-- Affichez dynamiquement les travaux.
-- Affichez les filtres par catégorie (venant de l’API également).
-- Faites fonctionner la **filtration des projets par catégorie**.
-
-### 3. Page de connexion :
-- Créez un formulaire de login.
-- Envoyez les identifiants à l’API.
-- Stockez le token de connexion dans le `localStorage`.
-
-### 4. Page d’administration (accessible uniquement si l’utilisateur est connecté) :
-- Affichez les projets existants.
-- Permettez la **suppression d’un projet** via une popup de confirmation.
-- Ajoutez une **2ᵉ popup** pour **ajouter un projet** (avec envoi à l’API + affichage de la preview de l’image).
+### 🔒 1. Authentification
+- Créez un modèle `User` (MongoDB) avec mot de passe hashé (bcrypt).
+- Mettez en place une route `POST /auth/login` qui renvoie un token JWT.
+- Stockez ce token dans le frontend et utilisez un `context` React pour l'utilisateur connecté.
+- Protégez certaines routes (comme l’espace admin) via middleware backend **et** via des routes privées côté React.
 
 ---
 
-## 💡 Recommandations
-- Organisez votre projet en dossiers (`components/`, `pages/`, `services/`, etc.).
-- Utilisez `fetch` ou `axios` pour les appels à l’API.
-- Utilisez le `localStorage` pour la persistance du token.
-- Mettez en place un système simple de **routing** avec `react-router`.
+### 🍽️ 2. Gestion des recettes
+- Créez un modèle `Recipe` contenant : titre, description, image, auteur, date.
+- Côté public : afficher toutes les recettes.
+- Côté privé (admin) :
+  - Ajouter une recette avec image upload.
+  - Modifier une recette existante.
+  - Supprimer une recette (avec confirmation).
+
+---
+
+### 🛠️ 3. Architecture et bonnes pratiques
+- **Backend** :
+  - Structure claire : `routes/`, `controllers/`, `models/`, `middlewares/`.
+  - Middleware d'authentification JWT.
+  - Validation des données (via `express-validator` ou équivalent).
+  - Erreurs bien gérées (codes HTTP, messages clairs).
+
+- **Frontend** :
+  - Utilisation de `React Router` pour la navigation.
+  - Contexte global pour l’utilisateur connecté.
+  - Gestion des formulaires (création / édition) avec feedback utilisateur.
+  - Composants réutilisables et dossier `services/` pour les appels API.
+
+---
+
+## 🔁 Bonus possibles
+- Ajout de catégories ou tags pour les recettes.
+- Système de recherche ou de tri.
+- Filtrage par utilisateur connecté.
+- Interface responsive et animations douces.
 
 ---
 
 ## 📦 Livrable attendu
-Un projet React complet, fonctionnel, proprement structuré, répondant aux fonctionnalités ci-dessus, et fidèle à la maquette.
+- Une **API REST Express** fonctionnelle et sécurisée.
+- Une **application React** bien structurée, interconnectée à l’API.
+- Code bien commenté, organisé, et facilement testable.
