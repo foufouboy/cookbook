@@ -4,7 +4,6 @@ function Header() {
     return (
         <>
             <div className="navLink">
-              <p>test</p>
                 <NavLink to="/"> Accueil</NavLink>
                 <NavLink to="/Login"> Connexion</NavLink>
                 <NavLink to="/Register"> Enregistrement</NavLink>
