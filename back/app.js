@@ -20,7 +20,12 @@ app.listen(PORT, () => {
  * PUBLIC
  *
  * "/recipes/" - GET - Afficher les recettes
+ * "/recipes/" - POST - Créer une nouvelle recette
+ *
  * "/recipes/:recipe_id" - GET - Afficher la recette/commentaires
+ * "/recipes/:recipe_id" - PUT - Modifier recette
+ * "/recipes/:recipe_id" - DELETE - Supprimer recette
+ *
  * "/recipes/:recipe_id/comments" - POST - Créer un commentaire
  * "/recipes/:recipe_id/comments" - DELETE - Supprimer un commentaire
  *
@@ -30,18 +35,42 @@ app.listen(PORT, () => {
  * "/auth/register" - POST - Afficher page de register
  *
  * "/user/" - GET - Page utilisateur
- * "/recipes/" - POST - Créer une nouvelle recette
- * "/recipes/:recipe_id" - PUT - Modifier recette
- * "/recipes/:recipe_id" - DELETE - Supprimer recette
+ *
+ *
  */
 
 /**
  * MODELS
  *
- * recipes : {
- *  name: string,
- *  ingredients: [] string
+ * recipe : {
+ *  id: uuid,
+ *  title: string,
+ *  description: string,
+ *  author: string,
+ *  image: url/blob,
+ *  date: date,
+ *  user_id: vvv
  * }
+ *
+ * user : {
+ *  id: uuid,
+ *  name: string,
+ *  role: "user" | "admin",
+ *  email: string,
+ *  hash: string,
+ *  password: string,
+ * }
+ *
+ * comment: {
+ *  id: uuid,
+ *  title: string,
+ *  content: string,
+ *  user_id: string,
+ *  recipe_id: string,
+ * }
+ *
+ * mongodb
+ *
  * ADMIN : Tout.
  * USER : Voir les recettes / Commenter
  */
