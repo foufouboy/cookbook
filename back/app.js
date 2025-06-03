@@ -1,11 +1,14 @@
 // salut
-const userRoute = require("./routes/userRoute.js");
+const userRoutes = require("./routes/userRoutes.js");
+const recipeRoutes = require("./routes/recipeRoutes.js");
 
 const express = require("express");
 const app = express();
 
-app.use("/", userRoute);
-app.get("/", (req, res) => res.redirect(""));
+app.use("/", userRoutes);
+
+app.use("/", recipeRoutes);
+
 
 const PORT = 3000;
 
