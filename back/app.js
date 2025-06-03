@@ -4,13 +4,41 @@ const userRoute = require("./routes/userRoute.js");
 const express = require("express");
 const app = express();
 
-app.use(userRoute);
-app.get("/", (req, res) => res.send("hello"));
+app.use("/", userRoute);
+app.get("/", (req, res) => res.redirect(""));
 
 const PORT = 3000;
 
 app.listen(PORT, () => {
-    console.log("Salut ^^")
-})
+	console.log("Salut ^^");
+});
 
-// test
+/**
+ * PUBLIC
+ *
+ * "/recipes/" - GET - Afficher les recettes
+ * "/recipes/:recipe_id" - GET - Afficher la recette/commentaires
+ * "/recipes/:recipe_id/comments" - POST - Créer un commentaire
+ * "/recipes/:recipe_id/comments" - DELETE - Supprimer un commentaire
+ *
+ * PRIVÉ
+ *
+ * "/auth/login" - POST - Afficher page de login
+ * "/auth/register" - POST - Afficher page de register
+ *
+ * "/user/" - GET - Page utilisateur
+ * "/recipes/" - POST - Créer une nouvelle recette
+ * "/recipes/:recipe_id" - PUT - Modifier recette
+ * "/recipes/:recipe_id" - DELETE - Supprimer recette
+ */
+
+/**
+ * MODELS
+ *
+ * recipes : {
+ *  name: string,
+ *  ingredients: [] string
+ * }
+ * ADMIN : Tout.
+ * USER : Voir les recettes / Commenter
+ */
