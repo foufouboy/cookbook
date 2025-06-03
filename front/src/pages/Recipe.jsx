@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router";
 import { useAuthContext } from "../contexts/AuthContext";
 
 function Recipe() {
-    const { isAdmin } = useAuthContext();
+    const { isAdmin, token } = useAuthContext();
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -31,9 +31,7 @@ function Recipe() {
                 {
                     method: "DELETE",
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -50,7 +48,6 @@ function Recipe() {
         if (id) {
             fetchRecipe(id);
         }
-        setLoading(false);
     }, [id]);
 
     return loading ? (

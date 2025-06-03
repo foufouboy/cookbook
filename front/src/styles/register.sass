@@ -1,1 +1,48 @@
 @use 'variables'
+.Register
+    position: absolute
+    height: 100%
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    h1
+        color: variables.$umber
+        margin-bottom: 20px
+    form
+        width: 260px
+        display: flex
+        flex-direction: column
+        align-items: center
+        label
+            align-self: flex-start
+            margin-bottom: 5px
+            margin-top: 10px
+            color: variables.$umber
+            font-size: 18px
+        input
+            width: 100%
+            height: 40px
+            border-radius: 10px
+            border: 1px solid variables.$umber
+            transition: border-color 0.3s ease
+            padding: 0 10px
+            &:focus-visible
+                outline: none
+                border-color: variables.$olivine
+        button
+            width: auto
+            padding: 0 20px
+            height: 40px
+            margin-top: 20px
+            color: white
+            border: none
+            border-radius: 5px
+            cursor: pointer
+            background: variables.$tea-green
+            transition: background 0.3s ease
+            &:focus-visible
+                outline: 1px solid variables.$umber
+            &:hover
+                background: variables.$olivine
