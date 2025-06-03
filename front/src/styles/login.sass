@@ -37,6 +37,11 @@
                 border: none
                 font-size: 1.2rem
                 font-weight: 700
+                border: 1px solid variables.$umber
+                transition: border-color 0.3s ease
+                &:focus-visible
+                    outline: none
+                    border-color: variables.$olivine
             label
                 position: absolute
                 top: 50%
@@ -47,17 +52,23 @@
                     font-size: 1.5rem
                     color: rgba(0,0 ,0 ,0.8)
         #sub
-           width: 60%
-           margin: auto
-           padding: 10px
-           border-radius: 15px
-           outline: none
-           border: none
-           background-color: rgba(255,255 ,255 , 0.5)
-           color: variables.$parchment 
-           font-size: 1.2rem
-           font-weight: bold
-           cursor: pointer
+            width: 60%
+            margin: auto
+            padding: 10px
+            border-radius: 15px
+            outline: none
+            border: none
+            background: variables.$chamoisee
+            color: variables.$parchment 
+            font-size: 1.2rem
+            font-weight: bold
+            cursor: pointer
+            transition: background .3s ease
+            &:focus-visible
+                outline: 1px solid variables.$umber
+            &:hover
+                background: variables.$olivine
+
 
     p
         color: variables.$parchment
@@ -65,8 +76,8 @@
         font-weight: bold
 
     form > div:has(> input:focus) > label
+
         animation: moving .5s ease-in-out
-        position: relative
 
     form > div:has(> input:focus) > label i
         color: variables.$parchment 
