@@ -13,21 +13,23 @@
     background: url('cuisine.jpg')
     
     form
-        
         display: flex
         flex-direction: column     
         gap:20px
         padding: 50px
         border-radius: 20px
         position: relative
+
         legend
             text-align: center
             font-size: 2rem
             font-weight: bold
             color: variables.$parchment 
+
         .input-email, .input-password
             position: relative
             width: 100%
+
             input
                 width: 100%
                 padding:10px 30px
@@ -42,6 +44,7 @@
                 &:focus-visible
                     outline: none
                     border-color: variables.$olivine
+
             label
                 position: absolute
                 top: 50%
@@ -51,6 +54,7 @@
                 i
                     font-size: 1.5rem
                     color: rgba(0,0 ,0 ,0.8)
+
         #sub
             width: 60%
             margin: auto
@@ -64,6 +68,7 @@
             font-weight: bold
             cursor: pointer
             transition: background .3s ease
+            
             &:focus-visible
                 outline: 1px solid variables.$umber
             &:hover
