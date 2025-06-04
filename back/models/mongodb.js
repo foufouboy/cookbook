@@ -2,8 +2,6 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 
 // Replace the placeholder with your Atlas connection string
 const url = process.env.MONGO_DB_URL;
-const env =
-  "mongodb+srv://Loazo:z1x2c3v4@mongotest.wefhjgu.mongodb.net/?retryWrites=true&w=majority&appName=mongoTest";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(url, {
   serverApi: {
