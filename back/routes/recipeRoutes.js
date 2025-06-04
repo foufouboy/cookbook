@@ -18,9 +18,10 @@ recipeRoutes.get("/recipes", async (req, res) => {
 
 // GET ID
 recipeRoutes.get("/recipes/:recipe_id", async (req, res) => {
+
 		try {
-		const recipeId = req.params;
-		const recipe = await db.getRecipeById(recipeId);
+		const {recipe_id} = req.params;
+		const recipe = await db.getRecipeById(recipe_id);
 
 		if(!recipe) {
 			res.status(404).send("Recipe doesn't exist")
@@ -28,7 +29,7 @@ recipeRoutes.get("/recipes/:recipe_id", async (req, res) => {
 		}
 
 		res.status(200).json(recipe);
-		
+
 	} catch (error) {
 		res.status(500).json({ message: "Recipe not retrieved"})
 	}
