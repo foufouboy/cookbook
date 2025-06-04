@@ -147,12 +147,6 @@ const db = {
 		try {
 			const database = await dbConnection();
 			const recipes = database.collection("recipes");
-			const ObjectId = require("mongodb").ObjectId;
-
-			console.log(title);
-			console.log(description);
-			console.log(author);
-			console.log(user_id);
 
 			if (!title || !description || !author || !user_id) {
 				throw new Error(
@@ -186,9 +180,10 @@ const db = {
 
 	async deleteRecipe(recipeId) {
 		try {
-			const ObjectId = require("mongodb").ObjectId;
+			const formatedId = new ObjectId(recipeId);
+			console.log(formatedId);
 
-			if (!ObjectId.isValid(recipeId)) {
+			if (!ObjectId.isValid(formatedId)) {
 				throw new Error("Recipe Id format is invalid");
 			}
 
@@ -214,11 +209,32 @@ const db = {
 	 * @returns {Promise<void>} A promise that resolves when the recipe is updated.
 	 */
 
-	async updateRecipe(recipeId, updateData) {
-		const database = await dbConnection();
-		const recipes = database.collection("recipes");
+	async updateRecipe(
+		recipeId,
+		{ title, description, author, image, date, user_id }
+	) {
+		try {
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
 
-		await recipes.updateOne({ _id: ObjectId(recipeId) }, {});
+			await recipes.updateOne(
+				{ _id: new ObjectId(recipeId) },
+				{
+					$set: {
+						title,
+						description,
+						author,
+						image: image || null,
+						date: date || new Date(),
+						user_id: user_id,
+					},
+				}
+			);
+
+			return 200;
+		} catch (error) {
+			console.error("Error updating comment", error);
+		}
 	},
 
 	/**
@@ -228,25 +244,29 @@ const db = {
 	 * * @returns {Promise<void>} A promise that resolves when the comment is created.
 	 */
 
-	async createComment(recipeId, { title, content, userId, recipeId }) {
+	async createComment({ title, content, userId, recipeId }) {
 		try {
 			const database = await dbConnection();
 			const recipes = database.collection("recipes");
 
+			if (!title || !content || !recipeId) {
+				throw new Error("Missing fields");
+			}
 			const comment = {
+				_id: new ObjectId(),
 				title,
 				content,
-				userId: ObjectId(userId),
-				recipeId: ObjectId(recipeId),
+				userId: null, // temporary
+				recipeId: new ObjectId(recipeId),
 				date: new Date(),
 			};
 
 			await recipes.updateOne(
-				{ _id: ObjectId(recipeId) },
+				{ _id: new ObjectId(recipeId) },
 				{ $push: { comments: comment } }
 			);
 
-			return 200;
+			return comment;
 		} catch (error) {
 			console.error("Error creating comment:", error);
 		}
@@ -264,10 +284,14 @@ const db = {
 			const database = await dbConnection();
 			const recipes = database.collection("recipes");
 
-			await recipes.updateOne(
-				{ _id: ObjectId(recipeId) },
-				{ $pull: { comments: { _id: ObjectId(commentId) } } }
+			const result = await recipes.updateOne(
+				{ _id: new ObjectId(recipeId) },
+				{ $pull: { comments: { _id: new ObjectId(commentId) } } }
 			);
+
+			if (result.modifiedCount === 0) {
+				return null;
+			}
 
 			return 200;
 		} catch (error) {
