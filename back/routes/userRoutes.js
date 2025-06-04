@@ -1,6 +1,7 @@
 const userRoutes = require("express").Router();
 const bcrypt = require("bcrypt");
-const db = require("../models/mongodb.js");
+const db = require("../models/db.js");
+const connectDb = require('../models/mongodb.js')
 const jwt = require("jsonwebtoken");
 const key = process.env.SECRET_KEY;
 
@@ -12,7 +13,7 @@ userRoutes.get("/", (req, res) => res.send("user"));
 userRoutes.post("/auth/login", async (req, res) => {
 	const { name, password, email } = req.body;
 	try {
-		const database = await db();
+		const database = await connectDb();
 		const dataUser = database.collection("users");
 
 		const verifyUser =
@@ -43,7 +44,7 @@ userRoutes.post("/auth/login", async (req, res) => {
 					$set: { jwt: token },
 				}
 			);
-			res.status(200).json({
+			return res.status(200).json({
 				message: "vous êtes bien connecté !",
 				token,
 			});
@@ -58,7 +59,7 @@ userRoutes.post("/auth/login", async (req, res) => {
 					$set: { jwt: token },
 				}
 			);
-			res.status(200).json({
+			return res.status(200).json({
 				message: "vous êtes bien connecté !",
 				token,
 			});
@@ -74,11 +75,28 @@ userRoutes.post("/auth/login", async (req, res) => {
 userRoutes.post("/auth/register", async (req, res) => {
 	const { name, email, password } = req.body;
 	const result = await db.createUser(name, email, password);
-
+ 
 	if (result) {
-		res.status(200).json({ message: "Ajout de l'utilisateur" });
+		
+        const database = await connectDb();
+		const dataUser = database.collection("users");
+
+        const token = jwt.sign({ data: 'user' }, key, { expiresIn: "3h" });
+
+        await dataUser.updateOne(
+            { email: email },
+            {
+                $set: { jwt: token },
+            }
+        );
+        console.log(token)
+        return res.status(200).json({
+            message: "Utilisateur créé et connecté avec succès !",
+            token
+        });
+		
 	} else {
-		res.status(500).json({ message: "Problème de la part du serveur" });
+		return res.status(500).json({ message: "Problème de la part du serveur" });
 	}
 });
 

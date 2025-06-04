@@ -1,5 +1,6 @@
 const { get } = require("http");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const dbConnection = require("./mongodb.js");
 
 const db = {
