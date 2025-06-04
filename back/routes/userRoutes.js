@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const db = require("../models/mongodb.js");
 const jwt = require('jsonwebtoken');
 const key = process.env.SECRET_KEY;
-// const dataUser = client.collection('users')
+
 // GET
 userRoutes.get("/", (req, res) => res.send("user"));
 
