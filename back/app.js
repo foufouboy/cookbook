@@ -9,10 +9,10 @@ const recipeRoutes = require("./routes/recipeRoutes.js");
 app.use("/", userRoutes);
 app.use("/", recipeRoutes);
 
-const PORT = 3000;
+const PORT = 5000;
 
 app.listen(PORT, () => {
-	console.log("Salutation ^^");
+	console.log(`Server is running at http://localhost:${PORT}`);
 });
 
 /**
