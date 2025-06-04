@@ -13,17 +13,4 @@ const authMiddleware = (req, res, next) => {
   } catch (error) {
     res.status(400).send('Token non valide ==> caca le token')
   }
-
-  const parts = authHeader.split(' ');
-
-  if (!parts.length === 2){
-    return res.status(401).send("Erreur, ton token est pourri, frérot");
-  }
-
-  const [scheme, token] = parts;
-
-  if (!/^Bearer$/i.test(scheme))
-  {
-    return res.status(401).send('Format de token incorrect ou pourri');
-  }
 }
