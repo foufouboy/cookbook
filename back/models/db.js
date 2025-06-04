@@ -1,7 +1,6 @@
 const { get } = require("http");
 
-const database = require("./mongodb.js")();
-const recipes = database.collection("recipes");
+const dbConnection = require("./mongodb.js");
 
 const db = {
 	/**
@@ -14,7 +13,7 @@ const db = {
 
 	async createUser(name, email, password) {
 		try {
-			const database = await db();
+			const database = await dbConnection();
 			const dataUser = database.collection("users");
 
 			const verifyUser = await dataUser.findOne({ email });
@@ -47,6 +46,7 @@ const db = {
 
 	async getAllRecipes() {
 		try {
+			const database = await dbConnection();
 			const recipes = database.collection("recipes");
 			const recipeList = await recipes.find({}).toArray();
 			return recipeList;
