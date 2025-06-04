@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 
 const dbConnection = require("./mongodb.js");
+const { create } = require("domain");
 
 const db = {
 	/**
@@ -66,12 +67,8 @@ const db = {
 		try {
 
 			const ObjectId = require("mongodb").ObjectId;
-
-			const formatedId = new ObjectId(recipeId);
-			console.log(formatedId);
 			
-
-			if (!ObjectId.isValid(formatedId)){
+			if (!ObjectId.isValid(recipeId)){
 				throw new Error("Recipe Id format is invalid");
 				console.log("salut^^");
 			}
@@ -92,6 +89,49 @@ const db = {
 			throw error;
 		}
 	},
+
+	/**
+	 * Creates a new recipe in the database.
+	 * @param {Object} recipeData - The data for the new recipe.
+	 * @returns {Promise<void>} A promise that resolves when the recipe is created.
+	 */
+
+	async createRecipe({ title, description, author, image, date, userId }) {},
+
+	/**
+	 * Deletes a recipe by its ID.
+	 * @param {string} recipeId - The ID of the recipe to delete.
+	 * @returns {Promise<void>} A promise that resolves when the recipe is deleted.
+	 */
+
+	async deleteRecipe(recipeId) {},
+
+	/**
+	 * Updates a recipe by its ID.
+	 * @param {string} recipeId - The ID of the recipe to update.
+	 * @param {Object} updateData - The data to update the recipe with.
+	 * @returns {Promise<void>} A promise that resolves when the recipe is updated.
+	 */
+
+	async updateRecipe(recipeId, updateData) {},
+
+	/**
+	 * Creates a new comment for a recipe.
+	 * @param {string} recipeId - The ID of the recipe to comment on.
+	 * @param {Object} commentData - The data for the new comment.
+	 * * @returns {Promise<void>} A promise that resolves when the comment is created.
+	 */
+
+	async createComment(recipeId, commentData) {},
+
+	/**
+	 * Deletes a comment by its ID.
+	 * @param {string} recipeId - The ID of the recipe from which to delete the comment.
+	 * @param {string} commentId - The ID of the comment to delete.
+	 * @returns {Promise<void>} A promise that resolves when the comment is deleted.
+	 */
+
+	async deleteComment(recipeId, commentId) {},
 };
 
 module.exports = db;
