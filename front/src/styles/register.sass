@@ -18,6 +18,10 @@
         display: flex
         flex-direction: column
         align-items: center
+        p.error
+            color: #b10000
+            font-size: 14px
+            margin-bottom: 10px
         label
             align-self: flex-start
             margin-bottom: 5px
@@ -31,7 +35,11 @@
             border: 1px solid variables.$umber
             transition: border-color 0.3s ease
             padding: 0 10px
-            background-color: rgba(255,255,255,0.5) 
+            background-color: rgba(255,255,255,0.5)
+            &.border-red
+                border-color: red
+            &.border-red:focus-visible
+                border-color: #b10000 !important
             &:focus-visible
                 outline: none
                 border-color: variables.$olivine
