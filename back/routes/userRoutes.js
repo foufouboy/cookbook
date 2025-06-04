@@ -1,6 +1,5 @@
 const userRoutes = require("express").Router();
-const bcrypt = require("bcrypt");
-const db = require("../models/mongodb.js");
+const db = require("../models/db.js");
 const jwt = require("jsonwebtoken");
 const key = process.env.SECRET_KEY;
 
@@ -73,6 +72,7 @@ userRoutes.post("/auth/login", async (req, res) => {
 
 userRoutes.post("/auth/register", async (req, res) => {
 	const { name, email, password } = req.body;
+	console.log(req.body);
 	const result = await db.createUser(name, email, password);
 
 	if (result) {
