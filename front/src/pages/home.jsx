@@ -16,9 +16,8 @@ function Home() {
             }
             setAllRecipes(await response.json());
         } catch (err) {
-
            setError(err.message) 
-           naviguate('/Error404')
+        //    naviguate('/Error404')
         }finally{
             setIsLoading(false);
         }
@@ -32,7 +31,7 @@ function Home() {
             {isLoading && (
                 <div>Les données charges...</div>
             )}
-            {!isLoading && (
+            {allRecipes.length !== 0 && !isLoading && (
                 <div className="conatiner-recipes">
                     {allRecipes.map(recipe => (
                         <div key={recipe.id}>
