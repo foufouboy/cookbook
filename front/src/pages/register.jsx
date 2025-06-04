@@ -5,7 +5,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import validator from "validator";
 
 function Register() {
-    const { setBothTokens, token } = useAuthContext();
+    const { setBothTokens } = useAuthContext();
     const navigate = useNavigate();
 
     const [somethingsWrong, setSomethingWrong] = useState(false);
