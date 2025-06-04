@@ -2,7 +2,7 @@ const userRoutes = require("express").Router();
 const bcrypt = require('bcrypt');
 const db = require("../models/mongodb.js");
 const jwt = require('jsonwebtoken');
-
+const key = process.env.SECRET_KEY;
 // const dataUser = client.collection('users')
 // GET
 userRoutes.get("/", (req, res) => res.send("user"));
@@ -26,7 +26,7 @@ userRoutes.post("/auth/login", async (req, res) => {
             return res.status(400).json({ message: "Le mot de passe n'est pas bon !" })
         }
         if (verifyUser.role === "admin") {
-            const token = jwt.sign({ data: 'admin' }, 'test123456', { expiresIn: '3h' });
+            const token = jwt.sign({ data: 'admin' }, key , { expiresIn: '3h' });
 
             await dataUser.updateOne(
                 { email: verifyUser.email },
@@ -38,7 +38,7 @@ userRoutes.post("/auth/login", async (req, res) => {
         }
 
         if (verifyUser.role === "user") {
-            const token = jwt.sign({ data: 'user' }, 'test123456', { expiresIn: '3h' });
+            const token = jwt.sign({ data: 'user' }, key , { expiresIn: '3h' });
 
             await dataUser.updateOne(
                 { _id: verifyUser._id },
