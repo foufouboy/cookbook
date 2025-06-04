@@ -16,14 +16,31 @@ recipeRoutes.get("/recipes", async (req, res) => {
 	}
 });
 
+// GET ID
+recipeRoutes.get("/recipes/:recipe_id", async (req, res) => {
+		try {
+		const recipeId = req.params;
+		const recipe = await db.getRecipeById(recipeId);
+
+		if(!recipe) {
+			res.status(404).send("Recipe doesn't exist")
+			return;
+		}
+
+		res.status(200).json(recipe);
+		
+	} catch (error) {
+		res.status(500).json({ message: "Recipe not retrieved"})
+	}
+});
+
 // POST
 recipeRoutes.post("/recipes", (req, res) =>
 	res.send("TO IMPLEMENT (post req to recipe)")
 );
 
 // PUT
-recipeRoutes.put("/recipes/:recipe_id", (req, res) => {
-	const { recipe_id } = req.params;
+recipeRoutes.put("/recipes/:recipe_id", async (req, res) => {
 	res.send(`TO IMPLEMENT (put req to recipes/${recipe_id})`);
 });
 
@@ -32,11 +49,7 @@ recipeRoutes.delete("/recipes/:recipe_id", (req, res) =>
 	res.send("TO IMPLEMENT (del req to recipes/:recipe_id)")
 );
 
-// GET ID
-recipeRoutes.get("/recipes/:recipe_id", (req, res) => {
-	const { idRecipe } = req.params;
-	res.send(`TO IMPLEMENT (get req to recipes/)`);
-});
+
 
 // POST COMMENTS
 recipeRoutes.post("/recipes/:recipe_id/comments", (req, res) => {
