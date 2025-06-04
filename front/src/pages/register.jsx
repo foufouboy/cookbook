@@ -13,7 +13,7 @@ function Register() {
 
         try {
             const response = await fetch(
-                "http://localhost:3000/auth/register",
+                "http://localhost:5000/auth/register",
                 {
                     method: "POST",
                     headers: {
@@ -36,7 +36,7 @@ function Register() {
             <h1>Inscription</h1>
             <form onSubmit={register}>
                 <label htmlFor="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" required />
+                <input type="text" id="username" name="name" required />
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" name="email" required />
                 <label htmlFor="password">Mot de passe</label>
