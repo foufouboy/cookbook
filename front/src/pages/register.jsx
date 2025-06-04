@@ -1,6 +1,11 @@
 import "../styles/register.sass";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Register() {
+    const { setBothTokens, token } = useAuthContext();
+    const navigate = useNavigate();
     async function register(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -24,9 +29,12 @@ function Register() {
             );
             if (!response.ok) {
                 throw new Error("Network response was not ok");
+            } else {
+                const result = await response.json();
+                setBothTokens(result.token);
+                console.log("Registration successful:", result);
+                navigate("/");
             }
-            const result = await response.json();
-            console.log("Registration successful:", result);
         } catch (error) {
             console.error("Error during registration:", error);
         }
