@@ -1,4 +1,4 @@
-const { get } = require("http");
+const bcrypt = require("bcrypt");
 
 const dbConnection = require("./mongodb.js");
 
@@ -30,7 +30,7 @@ const db = {
 				email,
 				password: passwordHashed,
 				role: "user",
-				jwt,
+				jwt: null,
 			});
 
 			return result;
