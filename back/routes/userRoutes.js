@@ -10,60 +10,17 @@ userRoutes.get("/", (req, res) => res.send("user"));
 // POST LOGIN
 userRoutes.post("/auth/login", async (req, res) => {
 	const { name, password, email } = req.body;
-	try {
-		const database = await db();
-		const dataUser = database.collection("users");
 
-		const verifyUser =
-			(await dataUser.findOne({ name })) ||
-			(await dataUser.findOne({ email }));
-		console.log(verifyUser);
-		if (!verifyUser) {
-			return res
-				.status(400)
-				.json({ message: "L'utilisateur n'existe pas !" });
-		}
-		const passwordVerify = await bcrypt.compare(
-			password,
-			verifyUser.password
-		);
+	const result = await db.login(name, email, password);
+	console.log(result);
 
-		if (!passwordVerify) {
-			return res
-				.status(400)
-				.json({ message: "Le mot de passe n'est pas bon !" });
-		}
-		if (verifyUser.role === "admin") {
-			const token = jwt.sign({ data: "admin" }, key, { expiresIn: "3h" });
-
-			await dataUser.updateOne(
-				{ email: verifyUser.email },
-				{
-					$set: { jwt: token },
-				}
-			);
-			res.status(200).json({
-				message: "vous êtes bien connecté !",
-				token,
-			});
-		}
-
-		if (verifyUser.role === "user") {
-			const token = jwt.sign({ data: "user" }, key, { expiresIn: "3h" });
-
-			await dataUser.updateOne(
-				{ _id: verifyUser._id },
-				{
-					$set: { jwt: token },
-				}
-			);
-			res.status(200).json({
-				message: "vous êtes bien connecté !",
-				token,
-			});
-		}
-	} catch (error) {
-		console.log(error);
+	if (result) {
+		res.status(200).json({
+			token: result.token,
+			message: "Connexion réussie",
+		});
+	} else {
+		res.status(500).json({ message: "Connexion échouée" });
 	}
 });
 

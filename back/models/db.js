@@ -1,9 +1,60 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const ObjectId = require("mongodb").ObjectId;
 
 const dbConnection = require("./mongodb.js");
 const { create } = require("domain");
 
 const db = {
+	async login(name, email, password) {
+		try {
+			const database = await dbConnection();
+			const dataUser = database.collection("users");
+
+			const verifyUser =
+				(await dataUser.findOne({ name })) ||
+				(await dataUser.findOne({ email }));
+
+			if (!verifyUser) {
+				return {
+					status: 400,
+					message: "Utilisateur non trouvé !",
+				};
+			}
+
+			const passwordVerify = await bcrypt.compare(
+				password,
+				verifyUser.password
+			);
+
+			if (!passwordVerify) {
+				return {
+					status: 400,
+					message: "Mot de passe !",
+				};
+			}
+
+			if (verifyUser.role) {
+				const token = jwt.sign({ data: verifyUser.role }, key, {
+					expiresIn: "3h",
+				});
+
+				await dataUser.updateOne(
+					{ email: verifyUser.email },
+					{
+						$set: { jwt: token },
+					}
+				);
+				return {
+					status: 200,
+					message: "Connexion réussie",
+					token,
+				};
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	},
 	/**
 	 * Creates a new user in the database.
 	 * @param {string} name - The name of the user.
@@ -65,14 +116,10 @@ const db = {
 
 	async getRecipeById(recipeId) {
 		try {
-
-			const ObjectId = require("mongodb").ObjectId;
-			
-			if (!ObjectId.isValid(recipeId)){
+			if (!ObjectId.isValid(recipeId)) {
 				throw new Error("Recipe Id format is invalid");
 				console.log("salut^^");
 			}
-			
 
 			const database = await dbConnection();
 			const recipes = database.collection("recipes");
@@ -98,7 +145,6 @@ const db = {
 
 	async createRecipe({ title, description, author, image, date, user_id }) {
 		try {
-
 			const database = await dbConnection();
 			const recipes = database.collection("recipes");
 			const ObjectId = require("mongodb").ObjectId;
@@ -108,8 +154,10 @@ const db = {
 			console.log(author);
 			console.log(user_id);
 
-			if(!title || !description || !author || !user_id) {
-				throw new Error("Missing fields : title description author or userId");
+			if (!title || !description || !author || !user_id) {
+				throw new Error(
+					"Missing fields : title description author or userId"
+				);
 			}
 
 			// const userObjectId = new ObjectId(user_id);
@@ -124,12 +172,10 @@ const db = {
 			};
 
 			const result = await recipes.insertOne(recipe);
-
 		} catch (error) {
 			console.error("Error adding recipe:", error);
 			throw error;
 		}
-
 	},
 
 	/**
@@ -140,12 +186,10 @@ const db = {
 
 	async deleteRecipe(recipeId) {
 		try {
-
 			const ObjectId = require("mongodb").ObjectId;
-			
-			if (!ObjectId.isValid(recipeId)){
-				throw new Error("Recipe Id format is invalid");
 
+			if (!ObjectId.isValid(recipeId)) {
+				throw new Error("Recipe Id format is invalid");
 			}
 
 			const database = await dbConnection();
@@ -170,15 +214,12 @@ const db = {
 	 * @returns {Promise<void>} A promise that resolves when the recipe is updated.
 	 */
 
+	async updateRecipe(recipeId, updateData) {
+		const database = await dbConnection();
+		const recipes = database.collection("recipes");
 
-
-
-
-
-
-
-
-	async updateRecipe(recipeId, updateData) {},
+		await recipes.updateOne({ _id: ObjectId(recipeId) }, {});
+	},
 
 	/**
 	 * Creates a new comment for a recipe.
@@ -187,7 +228,29 @@ const db = {
 	 * * @returns {Promise<void>} A promise that resolves when the comment is created.
 	 */
 
-	async createComment(recipeId, commentData) {},
+	async createComment(recipeId, { title, content, userId, recipeId }) {
+		try {
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
+
+			const comment = {
+				title,
+				content,
+				userId: ObjectId(userId),
+				recipeId: ObjectId(recipeId),
+				date: new Date(),
+			};
+
+			await recipes.updateOne(
+				{ _id: ObjectId(recipeId) },
+				{ $push: { comments: comment } }
+			);
+
+			return 200;
+		} catch (error) {
+			console.error("Error creating comment:", error);
+		}
+	},
 
 	/**
 	 * Deletes a comment by its ID.
@@ -196,7 +259,21 @@ const db = {
 	 * @returns {Promise<void>} A promise that resolves when the comment is deleted.
 	 */
 
-	async deleteComment(recipeId, commentId) {},
+	async deleteComment(recipeId, commentId) {
+		try {
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
+
+			await recipes.updateOne(
+				{ _id: ObjectId(recipeId) },
+				{ $pull: { comments: { _id: ObjectId(commentId) } } }
+			);
+
+			return 200;
+		} catch (error) {
+			console.error("Error deleting comment:", error);
+		}
+	},
 };
 
 module.exports = db;
