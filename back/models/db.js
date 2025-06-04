@@ -63,7 +63,26 @@ const db = {
 	 */
 
 	async getRecipeById(recipeId) {
-		// Implémenter ça
+		try {
+			const ObjectId = require("mongodb").ObjectId;
+			
+			if (!ObjectId.isValid(recipeId)){
+				throw new Error("Recipe Id format is invalid");
+			}
+
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
+			const recipe = await recipes.findOne({ _id });
+
+			if (!recipe) {
+				return null;
+			}
+
+			return recipe;
+		} catch (error) {
+			console.error("Error getting recipe by id :", error);
+			throw error;
+		}
 	},
 };
 
