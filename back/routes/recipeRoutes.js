@@ -2,13 +2,18 @@ const recipeRoutes = require("express").Router();
 const db = require("../models/db");
 
 // GET
-recipeRoutes.get("/recipes", (req, res) => {
-	// const recipes = await db.getAllRecipes();
+// TODO: Récupérer recettes et les envoyer en réponse
+recipeRoutes.get("/recipes", async (req, res) => {
+	try {
+		const recipes = await db.getAllRecipes();
 
-	res.json({
-		status: 200,
-		data: [],
-	});
+		res.json({
+			status: 200,
+			data: recipes,
+		});
+	} catch (error) {
+		console.error("Error fetching recipes:", error);
+	}
 });
 
 // POST
