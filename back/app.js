@@ -1,16 +1,18 @@
-// salut
-const userRoute = require("./routes/userRoute.js");
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
 
-app.use("/", userRoute);
-app.get("/", (req, res) => res.redirect(""));
+const userRoutes = require("./routes/userRoutes.js");
+const recipeRoutes = require("./routes/recipeRoutes.js");
+
+app.use("/", userRoutes);
+app.use("/", recipeRoutes);
 
 const PORT = 3000;
 
 app.listen(PORT, () => {
-	console.log("Salut ^^");
+	console.log("Salutation ^^");
 });
 
 /**
