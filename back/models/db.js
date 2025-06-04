@@ -96,7 +96,41 @@ const db = {
 	 * @returns {Promise<void>} A promise that resolves when the recipe is created.
 	 */
 
-	async createRecipe({ title, description, author, image, date, userId }) {},
+	async createRecipe({ title, description, author, image, date, user_id }) {
+		try {
+
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
+			const ObjectId = require("mongodb").ObjectId;
+
+			console.log(title);
+			console.log(description);
+			console.log(author);
+			console.log(user_id);
+
+			if(!title || !description || !author || !user_id) {
+				throw new Error("Missing fields : title description author or userId");
+			}
+
+			// const userObjectId = new ObjectId(user_id);
+
+			const recipe = {
+				title,
+				description,
+				author,
+				image: image || null,
+				date: date || new Date(),
+				user_id: user_id,
+			};
+
+			const result = await recipes.insertOne(recipe);
+
+		} catch (error) {
+			console.error("Error adding recipe:", error);
+			throw error;
+		}
+
+	},
 
 	/**
 	 * Deletes a recipe by its ID.
@@ -104,7 +138,30 @@ const db = {
 	 * @returns {Promise<void>} A promise that resolves when the recipe is deleted.
 	 */
 
-	async deleteRecipe(recipeId) {},
+	async deleteRecipe(recipeId) {
+		try {
+
+			const ObjectId = require("mongodb").ObjectId;
+			
+			if (!ObjectId.isValid(recipeId)){
+				throw new Error("Recipe Id format is invalid");
+
+			}
+
+			const database = await dbConnection();
+			const recipes = database.collection("recipes");
+			const recipe = await recipes.findOne({ _id: formatedId });
+
+			if (!recipe) {
+				return null;
+			}
+
+			return recipe;
+		} catch (error) {
+			console.error("Error getting recipe by id :", error);
+			throw error;
+		}
+	},
 
 	/**
 	 * Updates a recipe by its ID.
@@ -112,6 +169,14 @@ const db = {
 	 * @param {Object} updateData - The data to update the recipe with.
 	 * @returns {Promise<void>} A promise that resolves when the recipe is updated.
 	 */
+
+
+
+
+
+
+
+
 
 	async updateRecipe(recipeId, updateData) {},
 
