@@ -1,5 +1,5 @@
 const db = require("../models/db.js");
-
+const { validationResult } = require('express-validator')
 const recipeController = {
 	getRecipes: async (req, res) => {
 		try {
@@ -34,6 +34,12 @@ const recipeController = {
 		try {
 			const { title, description, author, image, date, user_id } =
 				req.body;
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				// const messages = errors.array().map(err => err.msg);
+				return res.status(400).json({ messages: errors.array() })
+			}
 			const newRecipe = await db.createRecipe({
 				title,
 				description,
@@ -59,6 +65,13 @@ const recipeController = {
 		try {
 			const { title, description, author, image, date, user_id } =
 				req.body;
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				// const messages = errors.array().map(err => err.msg);
+				return res.status(400).json({ messages: errors.array() })
+			}
+
 			const { recipe_id } = req.params;
 
 			const updatedRecipe = await db.updateRecipe(recipe_id, {
@@ -102,6 +115,14 @@ const commentsController = {
 	create: async (req, res) => {
 		try {
 			const { title, content, userId } = req.body;
+
+			const errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				// const messages = errors.array().map(err => err.msg);
+				return res.status(400).json({ messages: errors.array() })
+			}
+			
 			const { recipe_id } = req.params;
 			const newComment = await db.createComment({
 				title,

@@ -1,12 +1,16 @@
 const db = require("../models/db.js");
-
+const {validationResult} = require('express-validator');
 const userController = {
 	register: async (req, res) => {
 		const { name, password, email } = req.body;
-
+		const errors = validationResult(req)
 		const result = await db.login(name, email, password);
-		console.log(result);
 
+		if(!errors.isEmpty()){
+			// const messages = errors.array().map(err => err.msg);
+			
+			return res.status(400).json({messages : errors.array()})
+		}
 		if (result) {
 			res.status(200).json({
 				token: result.token,
