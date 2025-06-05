@@ -116,7 +116,9 @@ const db = {
 
 	async getRecipeById(recipeId) {
 		try {
-			if (!ObjectId.isValid(recipeId)) {
+			const formatedId = new ObjectId(recipeId);
+
+			if (!ObjectId.isValid(formatedId)) {
 				throw new Error("Recipe Id format is invalid");
 				console.log("salut^^");
 			}
