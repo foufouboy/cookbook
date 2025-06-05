@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const key = process.env.SECRET_KEY;
 const ObjectId = require("mongodb").ObjectId;
 const key = process.env.SECRET_KEY;
 
 const dbConnection = require("./mongodb.js");
-const { create } = require("domain");
 
 const db = {
 	async login(name, email, password) {
@@ -53,7 +53,7 @@ const db = {
 				};
 			}
 		} catch (error) {
-			console.log(error.message);
+			console.log(error);
 		}
 	},
 	/**
@@ -71,9 +71,7 @@ const db = {
 
 			const verifyUser = await dataUser.findOne({ email });
 			if (verifyUser) {
-				return res
-					.status(400)
-					.json({ message: "Utilisateur déjà existant !" });
+				return null;
 			}
 
 			const passwordHashed = await bcrypt.hash(password, 10);
@@ -271,7 +269,7 @@ const db = {
 			);
 
 			return comment;
-
+			
 		} catch (error) {
 			console.error("Error creating comment:", error);
 		}

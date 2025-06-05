@@ -1,16 +1,10 @@
 const db = require("../models/db.js");
-const {validationResult} = require('express-validator');
+const { validationResult } = require("express-validator");
 const userController = {
 	login: async (req, res) => {
 		const { name, password, email } = req.body;
-		const errors = validationResult(req)
 		const result = await db.login(name, email, password);
 
-		if(!errors.isEmpty()){
-			// const messages = errors.array().map(err => err.msg);
-		
-			return res.status(400).json({messages : errors.array()})
-		}
 		if (result) {
 			res.status(200).json({
 				token: result.token,
@@ -23,7 +17,14 @@ const userController = {
 
 	register: async (req, res) => {
 		const { name, email, password } = req.body;
-		console.log(req.body);
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			// const messages = errors.array().map(err => err.msg);
+
+			return res.status(400).json({ messages: errors.array() });
+		}
+
 		const result = await db.createUser(name, email, password);
 
 		if (result) {
