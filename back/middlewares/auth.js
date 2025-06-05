@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 
-const middleware = (req, res, next) => {};
-
 const isAuth = (req, res, next) => {
 	if (!req.user) {
 		res.status(403).send("Accès refusé. Authentification requise");
@@ -24,3 +22,5 @@ const authMiddleware = (req, res, next) => {
 		res.status(400).send("Token non valide ==> caca le token");
 	}
 };
+
+module.exports = authMiddleware;
