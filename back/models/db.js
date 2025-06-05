@@ -6,6 +6,15 @@ const ObjectId = require("mongodb").ObjectId;
 const dbConnection = require("./mongodb.js");
 
 const db = {
+	/**
+	 * Logs in a user by verifying their name or email and password.
+	 * @param {string} name - The name of the user.
+	 * @param {string} email - The email of the user.
+	 * @param {string} password - The password of the user.
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the status, message, and token if successful.
+	 * @throws {Error} If an error occurs during the login process.
+	 */
+
 	async login(name, email, password) {
 		try {
 			const database = await dbConnection();
@@ -53,6 +62,32 @@ const db = {
 			}
 		} catch (error) {
 			console.log(error);
+		}
+	},
+
+	/**
+	 * Logs out the user by setting the JWT to null for all users.
+	 * @returns {Promise<Object>} A promise that resolves to the result of the logout operation.
+	 */
+
+	async _logout() {
+		try {
+			const database = await dbConnection();
+			const dataUser = database.collection("users");
+
+			// LOGOUT ALL USERS SO JUST FOR TEST PURPOSES
+			const result = await dataUser.updateMany(
+				{},
+				{
+					$set: { jwt: null },
+				}
+			);
+
+			console.log(result);
+			return result;
+		} catch (error) {
+			console.error("Error during logout:", error);
+			throw error;
 		}
 	},
 	/**
@@ -268,7 +303,6 @@ const db = {
 			);
 
 			return comment;
-			
 		} catch (error) {
 			console.error("Error creating comment:", error);
 		}

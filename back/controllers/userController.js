@@ -5,13 +5,26 @@ const userController = {
 		const { name, password, email } = req.body;
 		const result = await db.login(name, email, password);
 
-		if (result) {
+		if (result.status === 200) {
 			res.status(200).json({
 				token: result.token,
 				message: "Connexion réussie",
 			});
 		} else {
-			res.status(500).json({ message: "Connexion échouée" });
+			res.status(400).json({
+				message: "Connexion échouée",
+				error: result.message,
+			});
+		}
+	},
+
+	logout: async (req, res) => {
+		const result = await db._logout();
+
+		if (result) {
+			res.status(200).json({ message: "Déconnexion réussie" });
+		} else {
+			res.status(500).json({ message: "Problème de la part du serveur" });
 		}
 	},
 
