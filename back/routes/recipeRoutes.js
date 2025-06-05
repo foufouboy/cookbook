@@ -4,28 +4,20 @@ const {
 	commentsController,
 } = require("../controllers/recipeController");
 
-// GET
-recipeRoutes.get("/recipes", recipeController.getRecipes);
+// RECIPES
 
-// GET ID
+recipeRoutes.get("/recipes", recipeController.getRecipes);
 recipeRoutes.get("/recipes/:recipe_id", recipeController.getRecipeById);
 
-// POST
 recipeRoutes.post("/recipes", recipeController.create);
-
-// PUT
 recipeRoutes.put("/recipes/:recipe_id", recipeController.update);
-
+recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
+recipeRoutes.put("/recipes/:recipe_id", recipeController.update);
 recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
 
-// POST COMMENTS
 recipeRoutes.post("/recipes/:recipe_id/comments", commentsController.create);
-
-// DEL COMMENTS
 recipeRoutes.delete("/recipes/:recipe_id/comments", commentsController.delete);
 
 // TODO: Validations
-// TODO: Refactor dans controllers
-// Middleware Auth
 
 module.exports = recipeRoutes;
