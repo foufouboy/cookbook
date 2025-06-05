@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ObjectId = require("mongodb").ObjectId;
+const key = process.env.SECRET_KEY;
 
 const dbConnection = require("./mongodb.js");
 const { create } = require("domain");
@@ -270,7 +271,7 @@ const db = {
 			);
 
 			return comment;
-			
+
 		} catch (error) {
 			console.error("Error creating comment:", error);
 		}
