@@ -8,6 +8,7 @@ const {
 	validatedComment,
 } = require("../middlewares/validator.js");
 const authMiddleware = require("../middlewares/auth.js");
+const multer = require('../middlewares/image.js');
 
 // RECIPES
 recipeRoutes.get("/recipes", recipeController.getRecipes);
@@ -17,12 +18,14 @@ recipeRoutes.post(
 	"/recipes",
 	authMiddleware,
 	validatedRecipe,
+	multer,
 	recipeController.create
 );
 recipeRoutes.put(
 	"/recipes/:recipe_id",
 	authMiddleware,
 	validatedRecipe,
+	multer,
 	recipeController.update
 );
 recipeRoutes.delete(

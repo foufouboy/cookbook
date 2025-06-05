@@ -37,7 +37,8 @@ const recipeController = {
 		try {
 			const { title, description, author, date, user_id } =
 				req.body;
-			const image = req.file ? `/img/${req.file.filename}` : null;
+			const host = req.get('host')
+			const image = `${req.protocol}://${host}/images/${req.file.filename}`;
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
@@ -70,7 +71,8 @@ const recipeController = {
 		try {
 			const { title, description, author, date, user_id } =
 				req.body;
-			const image = req.file?`/img/${req.file.filename}`:null;
+			const host = req.get('host')
+			const image = `${req.protocol}://${host}/images/${req.file.filename}`;
 			const errors = validationResult(req)
 
 			if (!errors.isEmpty()) {

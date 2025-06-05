@@ -1,31 +1,24 @@
-const multer = require("multer");
-const path = require("path");
+const multer = require('multer')
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './img')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
-  }
-})
-
-const fileFilter = (req, file, cb) => {
-  const fileTypes = /jpeg|jpg|png/;
-  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  const mytype = fileTypes.test(file.mytype)
-  
-  if(mytype && extname){
-    return cb(null, true)
-  }else{
-    cb(new Error('Veuillez mettre une image valide !'))
-  }
-
+const MIME_TYPE = {
+	'image/jpg': 'jpg',
+	'image/jpeg': 'jpg',
+	'image/png': 'png',
+	'image/webp': 'webp',
 }
 
-const stockage = multer.memoryStorage();
+const storage = multer.diskStorage({
+	destination: function (req, file, callback) {
+		callback(null, './images')
+	},
+	filename:  (req, file, callback) => {
+		const filename = file.originalname.split(' ').join('_')
+		const filenameArray = filename.split('.')
+		filenameArray.pop()
+		const filenameWithoutExtention = filenameArray.join('.')
+    const extension = MIME_TYPE[file.mimetype]
+		callback(null, filenameWithoutExtention + Date.now() + '.' + extension)
+	}
+})
 
-const upload = multer({ storage: stockage, limits: {fieldSize : 2* 1024 * 1024}, fileFilter })
-
-module.exports = upload;
+module.exports = multer({storage}).single('image')
