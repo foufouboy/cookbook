@@ -4,6 +4,7 @@ const {
 	commentsController,
 } = require("../controllers/recipeController");
 const { validatedRecipe, validatedComment } = require ('../middlewares/validator.js')
+const { authMiddleware } = require ('../middlewares/auth.js')
 // RECIPES
 
 recipeRoutes.get("/recipes", recipeController.getRecipes);
