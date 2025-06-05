@@ -1,5 +1,6 @@
 const db = require("../models/db.js");
 const { validationResult } = require('express-validator')
+const imageMiddleware = require("../middlewares/image.js")
 const recipeController = {
 	getRecipes: async (req, res) => {
 		try {
@@ -30,16 +31,20 @@ const recipeController = {
 		}
 	},
 
+	
+
 	create: async (req, res) => {
 		try {
-			const { title, description, author, image, date, user_id } =
+			const { title, description, author, date, user_id } =
 				req.body;
-			const errors = validationResult(req)
+			const image = req.file?`/img/${req.file.filename}`:null;
+			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
 				// const messages = errors.array().map(err => err.msg);
 				return res.status(400).json({ messages: errors.array() })
 			}
+			
 			const newRecipe = await db.createRecipe({
 				title,
 				description,
@@ -63,8 +68,9 @@ const recipeController = {
 
 	update: async (req, res) => {
 		try {
-			const { title, description, author, image, date, user_id } =
+			const { title, description, author, date, user_id } =
 				req.body;
+			const image = req.file?`/img/${req.file.filename}`:null;
 			const errors = validationResult(req)
 
 			if (!errors.isEmpty()) {
