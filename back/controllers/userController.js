@@ -39,7 +39,10 @@ const userController = {
 		}
 
 		const result = await db.createUser(name, email, password);
-
+		if(result.message){
+			res.status(400).json({ message: result.message });
+		}
+		
 		if (result) {
 			res.status(200).json({ message: "Ajout de l'utilisateur" });
 		} else {

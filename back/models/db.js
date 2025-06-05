@@ -2,6 +2,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const key = process.env.SECRET_KEY;
 const ObjectId = require("mongodb").ObjectId;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 const dbConnection = require("./mongodb.js");
 
@@ -102,10 +106,11 @@ const db = {
 		try {
 			const database = await dbConnection();
 			const dataUser = database.collection("users");
-
+			let message =""
 			const verifyUser = await dataUser.findOne({ email });
 			if (verifyUser) {
-				return null;
+				message = "L'utilisateur existe déjà !"
+				return message;
 			}
 
 			const passwordHashed = await bcrypt.hash(password, 10);
@@ -118,7 +123,7 @@ const db = {
 				jwt: null,
 			});
 
-			return result;
+			return {result, message};
 		} catch (error) {
 			console.error("Error creating user:", error);
 		}

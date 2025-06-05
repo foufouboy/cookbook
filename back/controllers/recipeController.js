@@ -44,7 +44,13 @@ const recipeController = {
 				// const messages = errors.array().map(err => err.msg);
 				return res.status(400).json({ messages: errors.array() })
 			}
+<<<<<<< Updated upstream
 			
+=======
+
+			
+
+>>>>>>> Stashed changes
 			const newRecipe = await db.createRecipe({
 				title,
 				description,

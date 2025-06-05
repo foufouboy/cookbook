@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     async function checkAdminStatus() {
         if (token) {
             try {
-                const response = await fetch("http://localhost:3000/user", {
+                const response = await fetch("http://localhost:5000/user", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
