@@ -8,7 +8,7 @@ const userController = {
 
 		if(!errors.isEmpty()){
 			// const messages = errors.array().map(err => err.msg);
-			
+		
 			return res.status(400).json({messages : errors.array()})
 		}
 		if (result) {

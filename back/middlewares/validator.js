@@ -35,6 +35,7 @@ module.exports.validatedComment = [
         .custom(value => {
             const words = value.toLowerCase().split(/\s+/)
             const foundWord = words.find(w => vulgarityWords.includes(w));
+            
             if(foundWord){
                 throw new Error (`Le mot ${foundWord} est interdit.`)
             }
