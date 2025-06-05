@@ -2,10 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const key = process.env.SECRET_KEY;
 const ObjectId = require("mongodb").ObjectId;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
 const dbConnection = require("./mongodb.js");
 
