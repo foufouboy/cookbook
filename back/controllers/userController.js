@@ -1,7 +1,7 @@
 const db = require("../models/db.js");
 const {validationResult} = require('express-validator');
 const userController = {
-	register: async (req, res) => {
+	login: async (req, res) => {
 		const { name, password, email } = req.body;
 		const errors = validationResult(req)
 		const result = await db.login(name, email, password);
@@ -21,7 +21,7 @@ const userController = {
 		}
 	},
 
-	login: async (req, res) => {
+	register: async (req, res) => {
 		const { name, email, password } = req.body;
 		console.log(req.body);
 		const result = await db.createUser(name, email, password);

@@ -254,6 +254,7 @@ const db = {
 			if (!title || !content || !recipeId) {
 				throw new Error("Missing fields");
 			}
+
 			const comment = {
 				_id: new ObjectId(),
 				title,
@@ -269,6 +270,7 @@ const db = {
 			);
 
 			return comment;
+			
 		} catch (error) {
 			console.error("Error creating comment:", error);
 		}

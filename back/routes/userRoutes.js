@@ -8,4 +8,6 @@ userRoutes.get("/", (req, res) => res.redirect("recipes"));
 userRoutes.post("/auth/login", userController.login);
 userRoutes.post("/auth/register", validatedUser,  userController.register, );
 
+
+
 module.exports = userRoutes;

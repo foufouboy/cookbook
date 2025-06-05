@@ -1,15 +1,8 @@
-import jwt from "jsonwebtoken";
-
-const isAuth = (req, res, next) => {
-	if (!req.user) {
-		res.status(403).send("Accès refusé. Authentification requise");
-	} else {
-		next();
-	}
-};
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
-	const authHeader = req.header.autorization?.split(" ")[1];
+
+	const authHeader = req.header.authorization?.split(" ")[1];
 
 	if (!authHeader)
 		return res.status(403).send("Accès refusé. Token non fourni");
