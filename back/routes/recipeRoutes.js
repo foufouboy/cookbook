@@ -5,14 +5,14 @@ const {
 } = require("../controllers/recipeController");
 const { validatedRecipe, validatedComment } = require ('../middlewares/validator.js')
 const { authMiddleware } = require ('../middlewares/auth.js')
-
+const upload = require('../middlewares/image.js')
 // RECIPES
 recipeRoutes.get("/recipes", recipeController.getRecipes);
 recipeRoutes.get("/recipes/:recipe_id", recipeController.getRecipeById);
 
-recipeRoutes.post("/recipes", validatedRecipe, recipeController.create);
-recipeRoutes.put("/recipes/:recipe_id", validatedRecipe, recipeController.update);
-recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
+recipeRoutes.post("/recipes", validatedRecipe,upload.single("image"), recipeController.create);
+recipeRoutes.put("/recipes/:recipe_id", validatedRecipe, upload.single("image"), recipeController.update);
+recipeRoutes.delete("/recipes/:recipe_id", authMiddleware, recipeController.delete);
 
 
 // COMMENTS
