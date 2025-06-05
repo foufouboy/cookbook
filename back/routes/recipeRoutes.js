@@ -12,13 +12,13 @@ recipeRoutes.get("/recipes/:recipe_id", recipeController.getRecipeById);
 
 recipeRoutes.post("/recipes", validatedRecipe, recipeController.create);
 recipeRoutes.put("/recipes/:recipe_id", validatedRecipe, recipeController.update);
-recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
+recipeRoutes.delete("/recipes/:recipe_id", authMiddleware, recipeController.delete);
 
 
 // COMMENTS
 
 recipeRoutes.post("/recipes/:recipe_id/comments",validatedComment, commentsController.create);
-recipeRoutes.delete("/recipes/:recipe_id/comments", commentsController.delete);
+recipeRoutes.delete("/recipes/:recipe_id/comments", authMiddleware,commentsController.delete);
 
 // TODO: Validations
 
