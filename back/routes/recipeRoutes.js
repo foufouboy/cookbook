@@ -15,6 +15,8 @@ recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
 recipeRoutes.put("/recipes/:recipe_id", recipeController.update);
 recipeRoutes.delete("/recipes/:recipe_id", recipeController.delete);
 
+// COMMENTS
+
 recipeRoutes.post("/recipes/:recipe_id/comments", commentsController.create);
 recipeRoutes.delete("/recipes/:recipe_id/comments", commentsController.delete);
 
