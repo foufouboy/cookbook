@@ -10,7 +10,7 @@ function Home() {
 
     const fecthAllRecipes = async() => {
         try {
-            const response = await fetch(`http://localhost:3000/recipes/`)
+            const response = await fetch(`http://localhost:5000/recipes/`)
              if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
@@ -35,7 +35,7 @@ function Home() {
             {allRecipes && !isLoading && (
                 <div className="conatiner-recipes">
                     {allRecipes.data.map(recipe => (
-                        <div key={recipe._id}>
+                        <div key={recipe._id} className="recipe">
                             <p>{recipe.title}</p>
                             <p>{recipe.description}</p>
                             <p>{recipe.author}</p>
