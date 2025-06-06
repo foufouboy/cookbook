@@ -11,3 +11,4 @@ userRoutes.post("/auth/logout", userController.logout);
 userRoutes.post("/auth/register", validatedUser, userController.register);
 
 module.exports = userRoutes;
+//ALED GIT
