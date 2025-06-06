@@ -3,7 +3,7 @@ import "../styles/home.sass";
 import { useNavigate } from "react-router";
 
 function Home() {
-    const [allRecipes, setAllRecipes] = useState([]);
+    const [allRecipes, setAllRecipes] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const naviguate = useNavigate();
@@ -14,7 +14,8 @@ function Home() {
              if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            setAllRecipes(await response.json());
+            const data = await response.json()
+            setAllRecipes(data);
         } catch (err) {
            setError(err.message) 
         //    naviguate('/Error404')
@@ -31,11 +32,13 @@ function Home() {
             {isLoading && (
                 <div>Les données charges...</div>
             )}
-            {allRecipes.length !== 0 && !isLoading && (
+            {allRecipes && !isLoading && (
                 <div className="conatiner-recipes">
-                    {allRecipes.map(recipe => (
-                        <div key={recipe.id}>
+                    {allRecipes.data.map(recipe => (
+                        <div key={recipe._id} className="recipe">
                             <p>{recipe.title}</p>
+                            <p>{recipe.description}</p>
+                            <p>{recipe.author}</p>
                             <img src={recipe.img} alt="image recette" />
                         </div>
                     ))}
