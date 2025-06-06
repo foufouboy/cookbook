@@ -15,7 +15,6 @@ function Home() {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json()
-            console.log(data)
             setAllRecipes(data);
         } catch (err) {
            setError(err.message) 

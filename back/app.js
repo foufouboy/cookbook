@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const path = require('path')
 const express = require("express");
 const cors = require('cors');
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.json())
 const userRoutes = require("./routes/userRoutes.js");
 const recipeRoutes = require("./routes/recipeRoutes.js");
 app.use('/images', express.static(path.join(__dirname, 'images')))
-app.use("/img", express.static(path.join(__dirname, 'img')));
+
 app.use("/", userRoutes);
 app.use("/", recipeRoutes);
 
