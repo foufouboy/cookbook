@@ -74,18 +74,7 @@ function Register() {
             <h1>Inscription</h1>
             <form onSubmit={register}>
                 <label htmlFor="username">Nom d'utilisateur</label>
-                <input
-                    className={invalidUsername ? "border-red" : ""}
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                />
-                {invalidUsername && (
-                    <p className="error">
-                        Le nom d'utilisateur doit être alphanumérique.
-                    </p>
-                )}
+                <input type="text" id="username" name="username" required />
                 <label htmlFor="email">Email</label>
                 <input
                     className={invalidEmail ? "border-red" : ""}
