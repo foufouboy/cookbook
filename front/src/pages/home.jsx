@@ -14,7 +14,9 @@ function Home() {
              if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            setAllRecipes(await response.json());
+            const data = await response.json()
+            console.log(data)
+            setAllRecipes(data);
         } catch (err) {
            setError(err.message) 
         //    naviguate('/Error404')
@@ -31,11 +33,13 @@ function Home() {
             {isLoading && (
                 <div>Les données charges...</div>
             )}
-            {allRecipes.length !== 0 && !isLoading && (
+            {allRecipes !== 0 && !isLoading && (
                 <div className="conatiner-recipes">
-                    {allRecipes.map(recipe => (
-                        <div key={recipe.id}>
+                    {allRecipes.data.map(recipe => (
+                        <div key={recipe._id}>
                             <p>{recipe.title}</p>
+                            <p>{recipe.description}</p>
+                            <p>{recipe.author}</p>
                             <img src={recipe.img} alt="image recette" />
                         </div>
                     ))}
