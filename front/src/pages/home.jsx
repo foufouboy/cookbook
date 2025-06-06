@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "../styles/home.sass";
-import { useNavigate } from "react-router";
-
+import { Link, useNavigate } from "react-router";
+import { useAuthContext } from "../contexts/AuthContext";
 function Home() {
     const [allRecipes, setAllRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+    const [token, setToken] = useState('');
+    const {isAdmin} = useAuthContext();
     const naviguate = useNavigate();
 
     const fecthAllRecipes = async() => {
@@ -18,21 +20,30 @@ function Home() {
             setAllRecipes(data);
         } catch (err) {
            setError(err.message) 
-        //    naviguate('/Error404')
+           naviguate('/Error404')
         }finally{
             setIsLoading(false);
         }
     }
     useEffect(() => {
+        if (!sessionStorage.getItem('reloaded')) {
+            sessionStorage.setItem('reloaded', 'true');
+            window.location.reload();
+        }
         fecthAllRecipes();
+        setToken(localStorage.getItem('token'))
     }, [])
 
     return(
         <>
             {isLoading && (
                 <div>Les données charges...</div>
-            )}
+            )} 
+            {isAdmin &&  (
+                    <Link to={"/edit"}>Edit</Link>
+                )}
             {allRecipes !== 0 && !isLoading && (
+               
                 <div className="conatiner-recipes">
                     {allRecipes.data.map(recipe => (
                         <div key={recipe._id}>
@@ -43,6 +54,7 @@ function Home() {
                         </div>
                     ))}
                 </div>
+
             )}
         </>
     );

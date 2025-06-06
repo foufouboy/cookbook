@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     async function checkAdminStatus() {
         if (token) {
             try {
-                const response = await fetch("http://localhost:5000/user", {
+                const response = await fetch("http://localhost:5000/user/", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -17,7 +17,13 @@ export const AuthProvider = ({ children }) => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setIsAdmin(data.isAdmin);
+                    console.log(data)
+                    if(data.message.data.role === 'admin') {
+                        console.log('bonjour admin')
+                        setIsAdmin(true);
+                        console.log(isAdmin)
+                    }
+                    
                 } else {
                     setIsAdmin(false);
                 }

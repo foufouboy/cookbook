@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Error404 from "./pages/Error404";
 import Footer from "./components/Footer";
+import Edit from "./pages/Edit";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Register" element={<Register />} />
                 <Route path="/Logout" element={<Logout />} />
+                <Route path="/edit" element={<Edit />} />
                 <Route path="/*" element={<Error404 />} />
             </Routes>
             <Footer />

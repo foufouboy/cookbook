@@ -1,12 +1,12 @@
 const userRoutes = require("express").Router();
 
 const userController = require("../controllers/userController.js");
-
+const authMiddleware = require('../middlewares/auth.js')
 
 const { validatedUser } = require("../middlewares/validator.js");
 // HOME
 
-userRoutes.get("/", (req, res) => res.redirect("recipes"));
+userRoutes.get("/user", authMiddleware, (req, res) => res.json({message : req.user}));
 
 
 // LOGIN & REGISTER

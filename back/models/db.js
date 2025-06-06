@@ -45,7 +45,8 @@ const db = {
 			}
 
 			if (verifyUser.role) {
-				const token = jwt.sign({ data: verifyUser.role }, key, {
+				const {name, _id, role} = verifyUser
+				const token = jwt.sign({ data: {name, _id, role} }, key, {
 					expiresIn: "3h",
 				});
 
