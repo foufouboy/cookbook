@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-const path = require("path");
 const userRoutes = require("./routes/userRoutes.js");
 const recipeRoutes = require("./routes/recipeRoutes.js");
 app.use('/images', express.static(path.join(__dirname, 'images')))
