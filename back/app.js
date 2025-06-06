@@ -1,12 +1,15 @@
 require("dotenv").config();
 const path = require('path');
 const express = require("express");
-const cors = require('cors');
+
 const app = express();
 
-app.use(cors());
-app.use(express.json())
 
+<<<<<<< HEAD
+=======
+
+app.use(express.json())
+>>>>>>> 313c41df4755a90a8102adcd2fee506c2cc9c25b
 const userRoutes = require("./routes/userRoutes.js");
 const recipeRoutes = require("./routes/recipeRoutes.js");
 app.use('/images', express.static(path.join(__dirname, 'images')))
@@ -17,7 +20,7 @@ app.use("/", recipeRoutes);
 const PORT = 5000;
 
 app.listen(PORT, () => {
-	console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
 
 /**

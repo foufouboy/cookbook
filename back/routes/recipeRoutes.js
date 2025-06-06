@@ -1,38 +1,37 @@
 const recipeRoutes = require("express").Router();
-const {
-	recipeController,
-	commentsController,
-} = require("../controllers/recipeController");
-const {
-	validatedRecipe,
-	validatedComment,
-} = require("../middlewares/validator.js");
-const authMiddleware = require("../middlewares/auth.js");
-const multer = require('../middlewares/image.js');
+const db = require("../models/db");
 
-// RECIPES
-recipeRoutes.get("/recipes", recipeController.getRecipes);
-recipeRoutes.get("/recipes/:recipe_id", recipeController.getRecipeById);
+// GET
+recipeRoutes.get("/recipes", (req, res) => {
+	// const recipes = await db.getAllRecipes();
 
-recipeRoutes.post(
-	"/recipes",
-	authMiddleware,
-	validatedRecipe,
-	multer,
-	recipeController.create
+	res.json({
+		status: 200,
+		data: [],
+	});
+});
+
+// POST
+recipeRoutes.post("/recipes", (req, res) =>
+	res.send("TO IMPLEMENT (post req to recipe)")
 );
-recipeRoutes.put(
-	"/recipes/:recipe_id",
-	authMiddleware,
-	validatedRecipe,
-	multer,
-	recipeController.update
+
+// PUT
+recipeRoutes.put("/recipes/:recipe_id", (req, res) => {
+	const { recipe_id } = req.params;
+	res.send(`TO IMPLEMENT (put req to recipes/${recipe_id})`);
+});
+
+// DEL RECIPE
+recipeRoutes.delete("/recipes/:recipe_id", (req, res) =>
+	res.send("TO IMPLEMENT (del req to recipes/:recipe_id)")
 );
-recipeRoutes.delete(
-	"/recipes/:recipe_id",
-	authMiddleware,
-	recipeController.delete
-);
+
+// GET ID
+recipeRoutes.get("/recipes/:recipe_id", (req, res) => {
+	const { idRecipe } = req.params;
+	res.send(`TO IMPLEMENT (get req to recipes/)`);
+});
 
 // COMMENTS
 
